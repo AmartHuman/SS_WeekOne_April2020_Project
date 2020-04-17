@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package com.ss.service;
+
+/**
+ * @author Alfred
+ *
+ */
+public class PublisherService {
+
+}
