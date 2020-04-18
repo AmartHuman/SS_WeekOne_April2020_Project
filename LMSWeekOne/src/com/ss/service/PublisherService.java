@@ -59,17 +59,47 @@ public class PublisherService implements LoadFiles {
 
 	}
 
-	public String updatePublisher(String publisherName, String publisherNewName,
-			String publisherNewAddress) {
+	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress) {
 
 		if (publisherDao.publisherMap.entrySet().stream()
 				.anyMatch(p -> p.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
+			if (publisherNewName != null) {//
+				if (publisherNewName.length() > 3 && publisherNewName.length() < 45) {
+					publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
+						if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
+							a.getValue().setPublisherName(publisherNewName);
+							publisherDao.writePublisherFile();
+						}
+					});
+				} else {
+					return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
+				}
+			} else {
+				return "publisher Name cannot be null";
+			}
+
+			if (!publisherNewAddress.equals("NO CHANGE")) {
+				if (publisherNewAddress != null) {
+					if (publisherNewAddress.length() > 3 && publisherNewAddress.length() < 45) {
+						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
+							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
+								a.getValue().setPublisherAddress(publisherNewAddress);
+								publisherDao.writePublisherFile();
+							}
+						});
+						return "Publishers Address has been updated";
+					} else {
+						return "publishers new Address you entered is ess then 3 characters or is longer then 45 characters";
+					}
+				}
+
+			}
 
 		} else {
 			return "Publisher was not found in database";
 		}
+		return "Publisher Has been updated";
 
-		return " ";
 	}
 
 	public void readPublisher() {

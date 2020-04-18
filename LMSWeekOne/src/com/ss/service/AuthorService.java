@@ -60,18 +60,26 @@ public class AuthorService implements LoadFiles {
 	// Update the Authors
 	public String updateAuthor(String authorName, String authorNameNew) {
 
-		if (authorDao.authorMap.entrySet().stream()
-				.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
+		if (authorNameNew != null) {
+			if (authorNameNew.length() > 3 && authorNameNew.length() < 45) {
+				if (authorDao.authorMap.entrySet().stream()
+						.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
 
-			authorDao.authorMap.entrySet().stream().forEach((a) -> {
-				if (a.getValue().getAuthorName().equalsIgnoreCase(authorName)) {
-					a.getValue().setAuthorName(authorNameNew);
-					authorDao.writeAuthorFile();
+					authorDao.authorMap.entrySet().stream().forEach((a) -> {
+						if (a.getValue().getAuthorName().equalsIgnoreCase(authorName)) {
+							a.getValue().setAuthorName(authorNameNew);
+							authorDao.writeAuthorFile();
+						}
+					});
+					return "Author Has been updated";
+				} else {
+					return "There is no author by that name to update";
 				}
-			});
-			return "Author Has been updated";
+			} else {
+				return "The Authors New Name is less then 3 characters or is longer then 45 characters";
+			}
 		} else {
-			return "There is no author by that name to update";
+			return "New Author Name Cannot be null!";
 		}
 
 	}
