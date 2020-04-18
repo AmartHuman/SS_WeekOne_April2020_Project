@@ -30,5 +30,10 @@ public class CreateAuthorTest {
 			System.out.println("File not found");
 		}
 	}
+	
+	
+	public void authorDuplicateIDFound() {
+		
+	}
 
 }
