@@ -18,6 +18,7 @@ public class PublisherService implements LoadFiles {
 	PublisherDao publisherDao = new PublisherDao();
 
 	public String createPublisher(String publisherName, String publisherAddress) {
+		publisherDao.readPublisherFile();
 		Random rand = new Random();
 		Integer publisherId = rand.nextInt(100000);
 		publisherId += 1;
@@ -55,31 +56,47 @@ public class PublisherService implements LoadFiles {
 				return "The Publishers Name is less then 3 characters or is longer then 45 characters";
 			}
 		} else
-			return "Name cannot be null!";
+			return "Names cannot be null!";
 
 	}
 
 	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress) {
 
-		if (publisherDao.publisherMap.entrySet().stream()
-				.anyMatch(p -> p.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-			if (publisherNewName != null) {//
-				if (publisherNewName.length() > 3 && publisherNewName.length() < 45) {
-					publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
-						if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
-							a.getValue().setPublisherName(publisherNewName);
-							publisherDao.writePublisherFile();
-						}
-					});
-				} else {
-					return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
-				}
-			} else {
-				return "publisher Name cannot be null";
-			}
+		if (publisherName != null && publisherNewName != null && publisherNewAddress != null) {
 
-			if (!publisherNewAddress.equals("NO CHANGE")) {
-				if (publisherNewAddress != null) {
+			if (publisherDao.publisherMap.entrySet().stream()
+					.anyMatch(p -> p.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
+
+				if (!publisherNewName.equalsIgnoreCase("NO CHANGE")
+						&& !publisherNewAddress.equalsIgnoreCase("NO CHANGE")) {
+					if (publisherNewName.length() > 3 && publisherNewName.length() < 45
+							&& publisherNewAddress.length() > 3 && publisherNewAddress.length() < 45) {
+						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
+							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
+								a.getValue().setPublisherName(publisherNewName);
+								a.getValue().setPublisherAddress(publisherNewAddress);
+								publisherDao.writePublisherFile();
+							}
+						});
+					} else {
+						return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
+					}
+				}
+
+				if (!publisherNewName.equalsIgnoreCase("NO CHANGE")) {
+					if (publisherNewName.length() > 3 && publisherNewName.length() < 45) {
+						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
+							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
+								a.getValue().setPublisherName(publisherNewName);
+								publisherDao.writePublisherFile();
+							}
+						});
+					} else {
+						return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
+					}
+				}
+
+				if (!publisherNewAddress.equalsIgnoreCase("NO CHANGE")) {
 					if (publisherNewAddress.length() > 3 && publisherNewAddress.length() < 45) {
 						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
 							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
@@ -87,16 +104,17 @@ public class PublisherService implements LoadFiles {
 								publisherDao.writePublisherFile();
 							}
 						});
-						return "Publishers Address has been updated";
 					} else {
 						return "publishers new Address you entered is ess then 3 characters or is longer then 45 characters";
 					}
+
 				}
 
+			} else {
+				return "Publisher was not found in database";
 			}
-
 		} else {
-			return "Publisher was not found in database";
+			return "you can't have a null value for a name or address";
 		}
 		return "Publisher Has been updated";
 

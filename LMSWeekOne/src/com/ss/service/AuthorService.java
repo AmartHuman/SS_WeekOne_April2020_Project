@@ -3,11 +3,8 @@
  */
 package com.ss.service;
 
-import java.io.IOException;
-import java.util.Map;
+
 import java.util.Random;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import com.ss.dao.AuthorDao;
 import com.ss.interfaces.LoadFiles;
@@ -22,8 +19,8 @@ public class AuthorService implements LoadFiles {
 	AuthorDao authorDao = new AuthorDao();
 
 	// Create a new Author
-	public String createAuthor(String authorName) throws IOException {
-
+	public String createAuthor(String authorName) {
+		authorDao.readAuthorFile();
 		Random rand = new Random();
 
 		Integer authorId = rand.nextInt(100000);
