@@ -15,17 +15,17 @@ import com.ss.service.BookService;
  */
 public class CreateBookTest {
 
-	//@Test
+	@Test
 	public void bookWasCreated() {
 		BookService bookService = new BookService();
-		assertEquals(bookService.createBook("A word with power", "Super", "over man long", "Lane 49494"),
+		assertEquals(bookService.createBook("A word with power", "Over under", "Killer Time", "Lane 49494","./resources/booksTest"),
 				"Book was created");
 	}
 
-	@Test
+	//@Test
 	public void bookAuthorWasCreated() {
 		BookService bookService = new BookService();
-		assertEquals(bookService.createBook("A word with power", "The ONE", "Test Pub", "Test Add"),
+		assertEquals(bookService.createBook("A word with power", "The ONE", "Test Pub", "Test Add","./resources/booksTest"),
 				"Book was created");
 	}
 

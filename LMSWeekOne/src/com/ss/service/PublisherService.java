@@ -17,7 +17,7 @@ public class PublisherService implements LoadFiles {
 
 	PublisherDao publisherDao = new PublisherDao();
 
-	public String createPublisher(String publisherName, String publisherAddress) {
+	public String createPublisher(String publisherName, String publisherAddress,String publisherFilePath) {
 		publisherDao.readPublisherFile();
 		Random rand = new Random();
 		Integer publisherId = rand.nextInt(100000);
@@ -46,7 +46,7 @@ public class PublisherService implements LoadFiles {
 				if (publisherAddress.length() > 3 && publisherAddress.length() < 45) {
 					publisherDao.publisher = new Publisher(publisherId, publisherName, publisherAddress);
 					publisherDao.publisherMap.put(publisherDao.publisher.getPublisherId(), publisherDao.publisher);
-					publisherDao.writePublisherFile();
+					publisherDao.writePublisherFile(publisherFilePath);
 					return "Publisher was Created";
 
 				} else {
@@ -60,7 +60,7 @@ public class PublisherService implements LoadFiles {
 
 	}
 
-	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress) {
+	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress, String publisherFilePath) {
 
 		if (publisherName != null && publisherNewName != null && publisherNewAddress != null) {
 
@@ -75,7 +75,7 @@ public class PublisherService implements LoadFiles {
 							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
 								a.getValue().setPublisherName(publisherNewName);
 								a.getValue().setPublisherAddress(publisherNewAddress);
-								publisherDao.writePublisherFile();
+								publisherDao.writePublisherFile(publisherFilePath);
 							}
 						});
 					} else {
@@ -88,7 +88,7 @@ public class PublisherService implements LoadFiles {
 						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
 							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
 								a.getValue().setPublisherName(publisherNewName);
-								publisherDao.writePublisherFile();
+								publisherDao.writePublisherFile(publisherFilePath);
 							}
 						});
 					} else {
@@ -101,7 +101,7 @@ public class PublisherService implements LoadFiles {
 						publisherDao.publisherMap.entrySet().stream().forEach((a) -> {
 							if (a.getValue().getPublisherName().equalsIgnoreCase(publisherName)) {
 								a.getValue().setPublisherAddress(publisherNewAddress);
-								publisherDao.writePublisherFile();
+								publisherDao.writePublisherFile(publisherFilePath);
 							}
 						});
 					} else {
@@ -127,11 +127,11 @@ public class PublisherService implements LoadFiles {
 		});
 	}
 
-	public String deletePublisher(String publisherName) {
+	public String deletePublisher(String publisherName, String publisherFilePath) {
 
 		if (publisherDao.publisherMap.entrySet()
 				.removeIf(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-			publisherDao.writePublisherFile();
+			publisherDao.writePublisherFile(publisherFilePath);
 			return "Publisher was removed from the database";
 		}
 		return "No Publisher by that name was found";

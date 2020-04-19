@@ -12,7 +12,7 @@ public class UpdateBookTest {
 	public void bookWasUpdated() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.updateBook("A Test", "Test was Good", "NO CHANGE", "NO CHANGE"),
+		assertEquals(bookService.updateBook("A Test", "Test was Good","./resources/booksTest"),
 				"Book has been updated");
 	}
 	
@@ -20,26 +20,15 @@ public class UpdateBookTest {
 	public void bookNameIsNull() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.updateBook(null, "Test was Good", "NO CHANGE", "NO CHANGE"),"Names cannot be null");
+		assertEquals(bookService.updateBook(null, "Test was Good","./resources/booksTest"),"Names cannot be null");
 	}
 	
-	@Test
-	public void bookNewNameIsNull() {
-		
-	}
-	@Test
-	public void bookAuthorNameIsNull() {
-		
-	}
-	@Test
-	public void bookPublisherNameIsNull() {
-		
-	}
+	
 	@Test
 	public void bookAllWhereIsNull() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.updateBook(null, null, null, null),"Names cannot be null");
+		assertEquals(bookService.updateBook(null, null,"./resources/booksTest"),"Names cannot be null");
 	}
 
 }

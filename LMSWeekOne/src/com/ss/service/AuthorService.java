@@ -15,11 +15,15 @@ import com.ss.model.Author;
  *
  */
 public class AuthorService implements LoadFiles {
-
+	
+	
 	AuthorDao authorDao = new AuthorDao();
+	BookService bookService = new BookService();
+	
+	String bookFilePath = "./resources/books";
 
 	// Create a new Author
-	public String createAuthor(String authorName) {
+	public String createAuthor(String authorName, String authorFilePath) {
 		authorDao.readAuthorFile();
 		Random rand = new Random();
 
@@ -43,7 +47,7 @@ public class AuthorService implements LoadFiles {
 			if (authorName.length() > 3 && authorName.length() < 45) {
 				authorDao.author = new Author(authorId, authorName);
 				authorDao.authorMap.put(authorDao.author.getAuthorId(), authorDao.author);
-				authorDao.writeAuthorFile();
+				authorDao.writeAuthorFile(authorFilePath);
 				return "Name was created";
 			} else {
 				return "The Authors Name is less then 3 characters or is longer then 45 characters";
@@ -55,7 +59,7 @@ public class AuthorService implements LoadFiles {
 	}
 
 	// Update the Authors
-	public String updateAuthor(String authorName, String authorNameNew) {
+	public String updateAuthor(String authorName, String authorNameNew, String authorFilePath) {
 
 		if (authorNameNew != null) {
 			if (authorNameNew.length() > 3 && authorNameNew.length() < 45) {
@@ -65,7 +69,7 @@ public class AuthorService implements LoadFiles {
 					authorDao.authorMap.entrySet().stream().forEach((a) -> {
 						if (a.getValue().getAuthorName().equalsIgnoreCase(authorName)) {
 							a.getValue().setAuthorName(authorNameNew);
-							authorDao.writeAuthorFile();
+							authorDao.writeAuthorFile(authorFilePath);
 						}
 					});
 					return "Author Has been updated";
@@ -90,10 +94,10 @@ public class AuthorService implements LoadFiles {
 	}
 
 	// Delete the author from the text file
-	public String deleteAuthor(String authorName) {
-
+	public String deleteAuthor(String authorName, String authorFilePath) {
 		if (authorDao.authorMap.entrySet().removeIf(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-			authorDao.writeAuthorFile();
+			authorDao.writeAuthorFile(authorFilePath);
+			
 			return "Author was removed from the database";
 		}
 		return "No Author by that name was found";

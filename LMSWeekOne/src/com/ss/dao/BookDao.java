@@ -27,6 +27,8 @@ public class BookDao {
 
 	public AuthorDao authorDao = new AuthorDao();
 	public PublisherDao publisherDao = new PublisherDao();
+	
+	public String path = "./resources/books";
 
 	public void readBookFile() {
 		String getFileLine;
@@ -61,11 +63,11 @@ public class BookDao {
 
 	}
 
-	public void wirteBookFile() {
+	public void wirteBookFile(String path) {
 
 		String data = " ";
 
-		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./resources/test"))) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(path))) {
 			for (Book book : bookMap.values()) {
 				this.book = book;
 				data = this.book.getBookId() + "/" + book.getBookName() + "/" + book.getBookAuthor().getAuthorId() + "/"

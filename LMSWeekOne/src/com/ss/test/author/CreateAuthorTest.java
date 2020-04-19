@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-
 import com.ss.service.AuthorService;
 
 /**
@@ -21,7 +20,7 @@ public class CreateAuthorTest {
 	@Test
 	public void authorNameEmptyOrNull() {
 		AuthorService authorService = new AuthorService();
-		assertEquals(authorService.createAuthor(null), "Author Name cannot be null");
+		assertEquals(authorService.createAuthor(null,"./resources/authorsTest"), "Author Name cannot be null");
 	}
 	
 	

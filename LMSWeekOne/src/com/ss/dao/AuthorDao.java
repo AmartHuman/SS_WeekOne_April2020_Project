@@ -22,6 +22,7 @@ public class AuthorDao {
 
 	public Author author;
 	public Map<Integer, Author> authorMap = new HashMap<>();
+	public String path = "./resources/authors";
 
 	public void readAuthorFile() {
 
@@ -42,11 +43,11 @@ public class AuthorDao {
 
 	}
 
-	public void writeAuthorFile() {
+	public void writeAuthorFile(String path) {
 
 		String data = " ";
 
-		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./resources/authors"))) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(path))) {
 
 			for (Author author : authorMap.values()) {
 				this.author = author;

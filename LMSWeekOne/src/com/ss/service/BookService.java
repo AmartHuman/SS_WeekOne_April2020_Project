@@ -3,14 +3,15 @@
  */
 package com.ss.service;
 
-
 import java.util.Random;
 
 import com.ss.dao.AuthorDao;
 import com.ss.dao.BookDao;
 import com.ss.dao.PublisherDao;
 import com.ss.interfaces.LoadFiles;
+import com.ss.model.Author;
 import com.ss.model.Book;
+import com.ss.model.Publisher;
 
 /**
  * @author Alfred
@@ -23,8 +24,11 @@ public class BookService implements LoadFiles {
 	public PublisherDao publisherDao = new PublisherDao();
 	public AuthorService authorService = new AuthorService();
 	public PublisherService publisherService = new PublisherService();
+	public String authorFilePath = "./resources/authors";
+	public String publisherFilePath = "./resources/publishers";
 
-	public String createBook(String bookName, String authorName, String publisherName, String publisherAddress) {
+	public String createBook(String bookName, String authorName, String publisherName, String publisherAddress,
+			String filePath) {
 
 		if (bookName != null && authorName != null && publisherName != null && publisherAddress != null) {
 			if (authorName.length() < 3 || authorName.length() > 45) {
@@ -44,33 +48,49 @@ public class BookService implements LoadFiles {
 
 			// Find Author of book or Create new entry into the database if not found
 			authorDao.readAuthorFile();
-			if (authorDao.authorMap.entrySet().stream()
-					.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-				this.authorDao.author = authorDao.author;
-			} else {
+			boolean authorFound = false;
+			for (Author author : authorDao.authorMap.values()) {
+				if (author.getAuthorName().equalsIgnoreCase(authorName)) {
+					this.authorDao.author = author;
+					authorFound = true;
+					break;
+				}
+			}
+			if (authorFound != true) {
 				System.out.println("Author was not found!");
 				System.out.println("Creating New Entrty...");
-				authorService.createAuthor(authorName);
-				//authorDao.readAuthorFile();
-				if (authorDao.authorMap.entrySet().stream()
-						.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-					this.authorDao.author = authorDao.author;
+				authorService.createAuthor(authorName, authorFilePath);
+				authorDao.readAuthorFile();
+				for (Author author : authorDao.authorMap.values()) {
+					if (author.getAuthorName().equals(authorName)) {
+						this.authorDao.author = author;
+						break;
+					}
 				}
 			}
 
 			// Find Publisher of the the book or Create a new entry into the database if not
 			// found
 			publisherDao.readPublisherFile();
-			if (publisherDao.publisherMap.entrySet().stream()
-					.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-				this.publisherDao.publisher = publisherDao.publisher;
-			} else {
+			boolean publisherFound = false;
+			for (Publisher publisher : publisherDao.publisherMap.values()) {
+				if (publisher.getPublisherName().equalsIgnoreCase(publisherName)) {
+					this.publisherDao.publisher = publisher;
+					publisherFound = true;
+					break;
+				}
+			}
+			if (publisherFound != true) {
 				System.out.println("Publisher was not found!");
 				System.out.println("Creating New Entrty...");
-				publisherService.createPublisher(publisherName, publisherAddress);
-				if (publisherDao.publisherMap.entrySet().stream()
-						.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-					this.publisherDao.publisher = publisherDao.publisher;
+				publisherService.createPublisher(publisherName, publisherAddress, publisherFilePath);
+				authorDao.readAuthorFile();
+				for (Publisher publisher : publisherDao.publisherMap.values()) {
+					if (publisher.getPublisherName().equalsIgnoreCase(publisherName)) {
+						this.publisherDao.publisher = publisher;
+						publisherFound = true;
+						break;
+					}
 				}
 			}
 
@@ -91,7 +111,7 @@ public class BookService implements LoadFiles {
 			if (bookName.length() > 3 && bookName.length() < 45) {
 				bookDao.book = new Book(bookId, bookName, authorDao.author, publisherDao.publisher);
 				bookDao.bookMap.put(bookDao.book.getBookId(), bookDao.book);
-				bookDao.wirteBookFile();
+				bookDao.wirteBookFile(filePath);
 				return "Book was created";
 
 			} else {
@@ -104,9 +124,9 @@ public class BookService implements LoadFiles {
 
 	}
 
-	public String updateBook(String bookName, String bookNewName, String authorName, String publisherName) {
+	public String updateBook(String bookName, String bookNewName, String filePath) {
 
-		if (bookName != null && bookNewName != null && authorName != null && publisherName != null) {
+		if (bookName != null && bookNewName != null) {
 			if (bookNewName.length() > 3 && bookNewName.length() < 45) {
 				if (bookDao.bookMap.entrySet().stream()
 						.anyMatch(b -> b.getValue().getBookName().equalsIgnoreCase(bookName))) {
@@ -114,15 +134,9 @@ public class BookService implements LoadFiles {
 						bookDao.bookMap.entrySet().stream().forEach((a) -> {
 							if (a.getValue().getBookName().equalsIgnoreCase(bookName)) {
 								a.getValue().setBookName(bookNewName);
-								bookDao.wirteBookFile();
+								bookDao.wirteBookFile(filePath);
 							}
 						});
-					} else if (!authorName.equalsIgnoreCase("NO CHANGE")) {
-
-					} else if (!publisherName.equalsIgnoreCase("NO CHANGE")) {
-
-					} else {
-						return "Nothing was changed";
 					}
 				} else {
 					return "The Book was not found in the database";
@@ -142,14 +156,14 @@ public class BookService implements LoadFiles {
 					+ b.getValue().getBookAuthor().getAuthorName() + "  | Publisher Name: "
 					+ b.getValue().getBookPublisher().getPublisherName());
 		});
-		bookDao.wirteBookFile();
+		// bookDao.wirteBookFile();
 	}
 
-	public String deleteBook(String bookName, Integer authorKey, Integer publisherKey) {
+	public String deleteBook(String bookName, Integer authorKey, Integer publisherKey, String filePath) {
 		if (authorKey != null && authorKey == 0 && publisherKey == 0) {
 			if (bookName != null) {
 				if (bookDao.bookMap.entrySet().removeIf(b -> b.getValue().getBookName().equalsIgnoreCase(bookName))) {
-					bookDao.wirteBookFile();
+					bookDao.wirteBookFile(filePath);
 					return "The Book Was removed from the database";
 				}
 				return "No Book by that name was found";
@@ -158,12 +172,12 @@ public class BookService implements LoadFiles {
 			}
 		} else if (bookName.equalsIgnoreCase("NO BOOK") && authorKey != 0) {
 			bookDao.bookMap.entrySet().removeIf(b -> b.getValue().getBookAuthor().getAuthorId().equals(authorKey));
-			bookDao.wirteBookFile();
+			bookDao.wirteBookFile(filePath);
 			return "Books of that Author were removed as well";
 		} else if (bookName.equalsIgnoreCase("NO BOOK") && publisherKey != 0) {
 			bookDao.bookMap.entrySet()
 					.removeIf(b -> b.getValue().getBookPublisher().getPublisherId().equals(publisherKey));
-			bookDao.wirteBookFile();
+			bookDao.wirteBookFile(filePath);
 			return "Books of that Publisher were removed as well";
 		} else {
 			return "Book deletion complete";
@@ -177,3 +191,35 @@ public class BookService implements LoadFiles {
 	}
 
 }
+
+
+
+
+//if (authorDao.authorMap.entrySet().stream()
+//.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
+//this.authorDao.author = authorDao.author;
+//} else {
+//System.out.println("Author was not found!");
+//System.out.println("Creating New Entrty...");
+//authorService.createAuthor(authorName, authorFilePath);
+//authorDao.readAuthorFile();
+//if (authorDao.authorMap.entrySet().stream()
+//	.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
+//this.authorDao.author = authorDao.author;
+//}
+//}
+
+
+//publisherDao.readPublisherFile();
+//if (publisherDao.publisherMap.entrySet().stream()
+//.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
+//this.publisherDao.publisher = publisherDao.publisher;
+//} else {
+//System.out.println("Publisher was not found!");
+//System.out.println("Creating New Entrty...");
+//publisherService.createPublisher(publisherName, publisherAddress, publisherFilePath);
+//if (publisherDao.publisherMap.entrySet().stream()
+//	.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
+//this.publisherDao.publisher = publisherDao.publisher;
+//}
+//}

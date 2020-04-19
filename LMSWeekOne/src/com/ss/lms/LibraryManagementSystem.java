@@ -26,7 +26,12 @@ public class LibraryManagementSystem {
 		Integer choice = 0;
 		String authorName, authorNameNew;
 		String publisherName, publisherAddress, publisherNewName, publisherNewAddress;
-
+		String bookName, bookNewName;
+		
+		String bookFilePath = "./resources/books";
+		String authorFilePath = "./resources/authors";
+		String publisherFilePath = "./resources/publishers";
+		
 		authorService.loadFiles();
 		publisherService.loadFiles();
 		bookService.loadFiles();
@@ -60,7 +65,7 @@ public class LibraryManagementSystem {
 							System.out.println("Please input an authors Name: ");
 							scanInput.nextLine();
 							authorName = scanInput.nextLine();
-							System.out.println(authorService.createAuthor(authorName));
+							System.out.println(authorService.createAuthor(authorName,authorFilePath));
 							break;
 						case 2:
 							System.out.println("Read Author");
@@ -72,13 +77,13 @@ public class LibraryManagementSystem {
 							authorName = scanInput.nextLine();
 							// scanInput.nextLine();
 							authorNameNew = scanInput.nextLine();
-							System.out.println(authorService.updateAuthor(authorName, authorNameNew));
+							System.out.println(authorService.updateAuthor(authorName, authorNameNew,authorFilePath));
 							break;
 						case 4:
 							System.out.println("Please input an author to Delete: ");
 							scanInput.nextLine();
 							authorName = scanInput.nextLine();
-							System.out.println(authorService.deleteAuthor(authorName));
+							System.out.println(authorService.deleteAuthor(authorName,authorFilePath));
 							break;
 						case 0:
 							break;
@@ -104,6 +109,16 @@ public class LibraryManagementSystem {
 
 						switch (choice) {
 						case 1:
+							System.out.println("Please input Book Name: ");
+							scanInput.nextLine();
+							bookName = scanInput.nextLine();
+							System.out.println("Plese Enter the Author of the book: ");
+							authorName = scanInput.nextLine();
+							System.out.println("Please Enter the Publishers Name: ");
+							publisherName = scanInput.nextLine();
+							System.out.println("Please Enter the Publishers Address: ");
+							publisherAddress = scanInput.nextLine();
+							System.out.println(bookService.createBook(bookName, authorName, publisherName, publisherAddress, bookFilePath));
 							break;
 						case 2:
 							System.out.println("Read books");
@@ -140,7 +155,7 @@ public class LibraryManagementSystem {
 							publisherName = scanInput.nextLine();
 							System.out.println("Plese input the Publisher Address: ");
 							publisherAddress = scanInput.nextLine();
-							System.out.println(publisherService.createPublisher(publisherName, publisherAddress));
+							System.out.println(publisherService.createPublisher(publisherName, publisherAddress,publisherFilePath));
 							break;
 						case 2:
 							System.out.println("Read publisher");
@@ -162,13 +177,13 @@ public class LibraryManagementSystem {
 								System.out.println("Please input the Publishers new Name: ");
 								publisherNewName = scanInput.nextLine();
 								System.out.println(
-										publisherService.updatePublisher(publisherName, publisherNewName, "NO CHANGE"));
+										publisherService.updatePublisher(publisherName, publisherNewName, "NO CHANGE",publisherFilePath));
 							} else if (choice == 2) {
 								scanInput.nextLine();
 								System.out.println("Please input the Publishers new Address: ");
 								publisherNewAddress = scanInput.nextLine();
 								System.out.println(publisherService.updatePublisher(publisherName, "NO CHANGE",
-										publisherNewAddress));
+										publisherNewAddress,publisherFilePath));
 
 							} else if (choice == 3) {
 								scanInput.nextLine();
@@ -177,7 +192,7 @@ public class LibraryManagementSystem {
 								System.out.println("Please input the Publishers new Address: ");
 								publisherNewAddress = scanInput.nextLine();
 								System.out.println(publisherService.updatePublisher(publisherName, publisherNewName,
-										publisherNewAddress));
+										publisherNewAddress,publisherFilePath));
 
 							} else {
 								System.out.println("Not a valid option!");
@@ -187,7 +202,7 @@ public class LibraryManagementSystem {
 							System.out.println("Please input an Publisher to Delete: ");
 							scanInput.nextLine();
 							publisherName = scanInput.nextLine();
-							System.out.println(publisherService.deletePublisher(publisherName));
+							System.out.println(publisherService.deletePublisher(publisherName,publisherFilePath));
 							break;
 						case 0:
 							break;

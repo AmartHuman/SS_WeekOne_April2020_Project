@@ -12,7 +12,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({CreateAuthorTest.class}) //adding them here
+@SuiteClasses({ CreateAuthorTest.class, UpdateAuthorTest.class, ReadAuthorTest.class, DeleteAuthorTest.class,
+		WriteAuthorTest.class }) // adding them here
 public class AuthorTestSuite {
 
 }

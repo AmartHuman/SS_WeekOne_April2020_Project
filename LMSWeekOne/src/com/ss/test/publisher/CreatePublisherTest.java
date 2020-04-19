@@ -21,13 +21,13 @@ public class CreatePublisherTest {
 	@Test
 	public void publisherNameEmptyOrNull() {
 		PublisherService publisherService = new PublisherService();
-		assertEquals(publisherService.createPublisher(null, "Some address"),"Names cannot be null!");
+		assertEquals(publisherService.createPublisher(null, "Some address","./resources/publishersTest"),"Names cannot be null!");
 	}
 	
 	@Test
 	public void publisherAddressEmptyOrNull() {
 		PublisherService publisherService = new PublisherService();
-		assertEquals(publisherService.createPublisher("Some Name", null),"Names cannot be null!");
+		assertEquals(publisherService.createPublisher("Some Name", null,"./resources/publishersTest"),"Names cannot be null!");
 	}
 	
 

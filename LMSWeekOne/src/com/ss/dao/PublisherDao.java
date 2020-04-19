@@ -40,11 +40,11 @@ public class PublisherDao {
 		}
 	}
 
-	public void writePublisherFile() {
+	public void writePublisherFile(String path) {
 		
 		String data = " ";
 
-		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./resources/publishers"))) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(path))) {
 
 			for (Publisher author : publisherMap.values()) {
 				this.publisher = author;
