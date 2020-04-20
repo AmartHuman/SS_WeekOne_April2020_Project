@@ -24,6 +24,12 @@ public class AuthorDao {
 	public Map<Integer, Author> authorMap = new HashMap<>();
 	public String path = "./resources/authors";
 
+	/*
+	 * 
+	 * Read the author file to then be put into the authorMap
+	 * 
+	 * 
+	 * */
 	public void readAuthorFile() {
 
 		String getFileLine;
@@ -43,6 +49,12 @@ public class AuthorDao {
 
 	}
 
+	/*
+	 * 
+	 * Wirte to the author file and pass in the path to find were the file is at
+	 * 
+	 * 
+	 * */
 	public void writeAuthorFile(String path) {
 
 		String data = " ";

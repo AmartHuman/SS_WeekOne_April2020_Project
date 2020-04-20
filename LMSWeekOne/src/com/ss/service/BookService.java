@@ -27,6 +27,12 @@ public class BookService implements LoadFiles {
 	public String authorFilePath = "./resources/authors";
 	public String publisherFilePath = "./resources/publishers";
 
+	
+	/*
+	 * 
+	 * Create a book by passing in a Book Name, Author Name, Publisher Name and Publisher Address 
+	 * 
+	 * */
 	public String createBook(String bookName, String authorName, String publisherName, String publisherAddress,
 			String filePath) {
 
@@ -121,6 +127,11 @@ public class BookService implements LoadFiles {
 
 	}
 
+	/*
+	 * 
+	 * Update a book by passing in book name, a new book name
+	 * 
+	 * */
 	public String updateBook(String bookName, String bookNewName, String filePath) {
 
 		if (bookName != null && bookNewName != null) {
@@ -155,9 +166,13 @@ public class BookService implements LoadFiles {
 					+ b.getValue().getBookPublisher().getPublisherName());
 		});
 		return "done";
-		// bookDao.wirteBookFile();
 	}
 
+	/*
+	 * 
+	 * Dlete a book by passing in a book Name
+	 * 
+	 * */
 	public String deleteBook(String bookName, String filePath) {
 		
 			if (bookName != null) {
@@ -178,35 +193,3 @@ public class BookService implements LoadFiles {
 	}
 
 }
-
-
-
-
-//if (authorDao.authorMap.entrySet().stream()
-//.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-//this.authorDao.author = authorDao.author;
-//} else {
-//System.out.println("Author was not found!");
-//System.out.println("Creating New Entrty...");
-//authorService.createAuthor(authorName, authorFilePath);
-//authorDao.readAuthorFile();
-//if (authorDao.authorMap.entrySet().stream()
-//	.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-//this.authorDao.author = authorDao.author;
-//}
-//}
-
-
-//publisherDao.readPublisherFile();
-//if (publisherDao.publisherMap.entrySet().stream()
-//.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-//this.publisherDao.publisher = publisherDao.publisher;
-//} else {
-//System.out.println("Publisher was not found!");
-//System.out.println("Creating New Entrty...");
-//publisherService.createPublisher(publisherName, publisherAddress, publisherFilePath);
-//if (publisherDao.publisherMap.entrySet().stream()
-//	.anyMatch(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {
-//this.publisherDao.publisher = publisherDao.publisher;
-//}
-//}

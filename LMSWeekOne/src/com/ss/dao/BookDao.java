@@ -30,6 +30,11 @@ public class BookDao {
 	
 	public String path = "./resources/books";
 
+	/*
+	 * 
+	 * Read the book file to be put into the bookMap
+	 * 
+	 * */
 	public void readBookFile() {
 		String getFileLine;
 
@@ -62,6 +67,12 @@ public class BookDao {
 
 	}
 
+	/*
+	 * 
+	 * Write bookMap to a file 
+	 * 
+	 * 
+	 * */
 	public void wirteBookFile(String path) {
 
 		String data = " ";

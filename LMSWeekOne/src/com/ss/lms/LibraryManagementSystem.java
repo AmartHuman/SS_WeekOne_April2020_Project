@@ -36,6 +36,11 @@ public class LibraryManagementSystem {
 		publisherService.loadFiles();
 		bookService.loadFiles();
 
+		/*
+		 * 
+		 * Main Menu loop
+		 * 
+		 * */
 		while (true) {
 			System.out.println("1.) Author");
 			System.out.println("2.) Book");
@@ -48,6 +53,11 @@ public class LibraryManagementSystem {
 				if (choice == 1) {
 					System.out.println("Author Options");
 					while (true) {
+						/*
+						 * 
+						 * Author options on what to do with the database
+						 * 
+						 * */
 						System.out.println("   _________________________________________________________");
 						System.out.println("  |___________________Edit Author Database__________________|");
 						System.out.println("  |1.Create Author                                          |");
@@ -95,6 +105,11 @@ public class LibraryManagementSystem {
 					System.out.println("Book Options");
 					
 					while (true) {
+						/*
+						 * 
+						 * Book options on what to do with the database
+						 * 
+						 * */
 						System.out.println("   _________________________________________________________");
 						System.out.println("  |___________________Edit Books Data_______________________|");
 						System.out.println("  |1.Create Book                                            |");
@@ -146,6 +161,11 @@ public class LibraryManagementSystem {
 				} else if (choice == 3) {
 					System.out.println("Publisher Options");
 					while (true) {
+						/*
+						 * 
+						 * Publisher options on what to do with the database
+						 * 
+						 * */
 						System.out.println("   _________________________________________________________");
 						System.out.println("  |___________________Edit Publisher Data___________________|");
 						System.out.println("  |1.Create Publisher                                       |");

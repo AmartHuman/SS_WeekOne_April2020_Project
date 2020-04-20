@@ -9,7 +9,7 @@ import com.ss.service.BookService;
 
 public class DeleteBookTest {
 	
-	@Test
+	//@Test
 	public void deleteABook() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();

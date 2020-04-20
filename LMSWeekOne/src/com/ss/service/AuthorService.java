@@ -127,35 +127,4 @@ public class AuthorService implements LoadFiles {
 
 }
 
-// Stream.of(authorDao.authorMap.keySet().get).forEach(System.out::println);
-// authorDao.authorMap.forEach((author.getAutherId(),author) ->
-// System.out.println(author.getAutherId()));
-// authorDao.authorMap.forEach((key, value) -> System.out.println(key + ":" +
-// value));
-// System.out.println(authorDao.authorMap);
-// Stream.of(authorDao.authorMap.values().toString()).forEach(System.out::println);
 
-// authorDao.authorMap.replace(, authorDao.author.setAuthorName(authorName));
-//authorDao.authorMap.entrySet().stream().filter(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName)).forEach(Map.Entry::getValue);
-//
-//authorDao.authorMap.entrySet().stream().anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName));
-//if(authorDao.authorMap.entrySet().stream().anyMatch(a -> authorName.equalsIgnoreCase(a.getValue().getAuthorName()))) {
-//authorDao.author.setAuthorName(authorName);
-//authorDao.writeAuthorFile();
-// authorDao.authorMap.replace(1, authorDao.author);
-// }
-// System.out.println(authorDao.authorMap.entrySet().stream().filter(a ->
-// authorName.equalsIgnoreCase(a.getValue().getAuthorName()))
-// .map(Map.Entry::getValue));
-//Integer authorId;
-//authorDao.authorMap.entrySet().stream().forEach((a)->{
-//	if(authorName.equalsIgnoreCase(a.getValue().getAuthorName())) {
-//		//authorDao.authorMap.put(a.getKey(), a.getValue().setAuthorName(authorName));
-//		authorId = a.getKey();
-//	}
-//});
-//if(authorDao.authorMap.entrySet().stream().anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
-//	
-//}
-// authorDao.authorMap.computeIfPresent(3, (k,v) ->
-// v.setAuthorName(authorName));

@@ -8,7 +8,7 @@ import com.ss.service.BookService;
 
 public class UpdateBookTest {
 
-	@Test
+	//@Test
 	public void bookWasUpdated() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();

@@ -23,6 +23,13 @@ public class PublisherDao {
 	public Publisher publisher;
 	public Map<Integer, Publisher> publisherMap = new HashMap<>();
 
+	/*
+	 * 
+	 * 
+	 * Read publisher File and put into the publshierMap
+	 * 
+	 * 
+	 * */
 	public void readPublisherFile() {
 
 		String getFileLine;
@@ -40,6 +47,12 @@ public class PublisherDao {
 		}
 	}
 
+	/*
+	 * 
+	 * Write publisherMap into a file
+	 * 
+	 * 
+	 * */
 	public void writePublisherFile(String path) {
 		
 		String data = " ";
