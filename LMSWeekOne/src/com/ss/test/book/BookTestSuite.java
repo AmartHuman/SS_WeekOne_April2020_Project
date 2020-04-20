@@ -12,7 +12,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CreateBookTest.class, DeleteBookTest.class, UpdateBookTest.class })
+@SuiteClasses({ CreateBookTest.class, DeleteBookTest.class, UpdateBookTest.class, ReadBookTest.class, WriteBookTest.class})
 public class BookTestSuite {
 
 }

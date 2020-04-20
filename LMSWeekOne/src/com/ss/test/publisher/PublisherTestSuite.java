@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ CreatePublisherTest.class, DeletePublisherTest.class, UpdatePublisherTest.class,
-		ReadPublisherTest.class, })
+		ReadPublisherTest.class, WritePublisherTest.class})
 public class PublisherTestSuite {
 
 }

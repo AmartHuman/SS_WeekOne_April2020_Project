@@ -53,8 +53,8 @@ public class PublisherDao {
 					writer.write(data);
 			}
 
-		} catch (Exception e) {
-			System.out.println();
+		} catch (IOException e) {
+			System.out.println("File Not Found");
 		}
 	}
 

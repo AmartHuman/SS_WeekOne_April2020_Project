@@ -11,7 +11,8 @@ import java.io.Serializable;
  */
 public class Book implements Serializable{
 	
-	private static final long serialVersionUID = 2348684130499225508L;
+
+	private static final long serialVersionUID = 8029212148695634255L;
 	
 	
 	private Integer bookId;
@@ -40,6 +41,7 @@ public class Book implements Serializable{
 	public Integer getBookId() {
 		return bookId;
 	}
+	
 	/**
 	 * @param bookId the bookId to set
 	 */
@@ -82,6 +84,50 @@ public class Book implements Serializable{
 	public void setBookPublisher(Publisher bookPublisher) {
 		this.bookPublisher = bookPublisher;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bookAuthor == null) ? 0 : bookAuthor.hashCode());
+		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
+		result = prime * result + ((bookName == null) ? 0 : bookName.hashCode());
+		result = prime * result + ((bookPublisher == null) ? 0 : bookPublisher.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (bookAuthor == null) {
+			if (other.bookAuthor != null)
+				return false;
+		} else if (!bookAuthor.equals(other.bookAuthor))
+			return false;
+		if (bookId == null) {
+			if (other.bookId != null)
+				return false;
+		} else if (!bookId.equals(other.bookId))
+			return false;
+		if (bookName == null) {
+			if (other.bookName != null)
+				return false;
+		} else if (!bookName.equals(other.bookName))
+			return false;
+		if (bookPublisher == null) {
+			if (other.bookPublisher != null)
+				return false;
+		} else if (!bookPublisher.equals(other.bookPublisher))
+			return false;
+		return true;
+	}
+
 		
 
 }

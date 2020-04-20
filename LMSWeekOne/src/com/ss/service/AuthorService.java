@@ -7,6 +7,7 @@ package com.ss.service;
 import java.util.Random;
 
 import com.ss.dao.AuthorDao;
+import com.ss.dao.BookDao;
 import com.ss.interfaces.LoadFiles;
 import com.ss.model.Author;
 
@@ -18,12 +19,17 @@ public class AuthorService implements LoadFiles {
 	
 	
 	AuthorDao authorDao = new AuthorDao();
-	BookService bookService = new BookService();
+	BookDao bookDao = new BookDao();
 	
 	String bookFilePath = "./resources/books";
+	
 
 	// Create a new Author
 	public String createAuthor(String authorName, String authorFilePath) {
+		
+		if(authorFilePath == null)
+			return "File path cannot be null";
+		
 		authorDao.readAuthorFile();
 		Random rand = new Random();
 
@@ -61,7 +67,7 @@ public class AuthorService implements LoadFiles {
 	// Update the Authors
 	public String updateAuthor(String authorName, String authorNameNew, String authorFilePath) {
 
-		if (authorNameNew != null) {
+		if (authorNameNew != null && authorName != null) {
 			if (authorNameNew.length() > 3 && authorNameNew.length() < 45) {
 				if (authorDao.authorMap.entrySet().stream()
 						.anyMatch(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
@@ -80,21 +86,31 @@ public class AuthorService implements LoadFiles {
 				return "The Authors New Name is less then 3 characters or is longer then 45 characters";
 			}
 		} else {
-			return "New Author Name Cannot be null!";
+			return "Name Cannot be null!";
 		}
 
 	}
 
 	// Display the Author Data from the text file
-	public void readAuthor() {
-		// authorDao.readAuthorFile();
+	public String readAuthor() {
+		authorDao.readAuthorFile();
 		authorDao.authorMap.entrySet().stream().forEach((a) -> {
 			System.out.println("Author Name: " + a.getValue().getAuthorName());
 		});
+		return "done";
 	}
 
 	// Delete the author from the text file
 	public String deleteAuthor(String authorName, String authorFilePath) {
+		if(authorName == null)
+			return  "Name Cannot be null!";
+		if(authorFilePath == null)
+			return "Path cannot be null!";
+		
+		bookDao.readBookFile();
+		bookDao.bookMap.entrySet().removeIf(b-> b.getValue().getBookAuthor().getAuthorName().equals(authorName));
+		bookDao.wirteBookFile(bookFilePath);
+		
 		if (authorDao.authorMap.entrySet().removeIf(a -> a.getValue().getAuthorName().equalsIgnoreCase(authorName))) {
 			authorDao.writeAuthorFile(authorFilePath);
 			
@@ -107,6 +123,7 @@ public class AuthorService implements LoadFiles {
 	public void loadFiles() {
 		authorDao.readAuthorFile();
 	}
+	
 
 }
 

@@ -5,6 +5,7 @@ package com.ss.service;
 
 import java.util.Random;
 
+import com.ss.dao.BookDao;
 import com.ss.dao.PublisherDao;
 import com.ss.interfaces.LoadFiles;
 import com.ss.model.Publisher;
@@ -16,8 +17,17 @@ import com.ss.model.Publisher;
 public class PublisherService implements LoadFiles {
 
 	PublisherDao publisherDao = new PublisherDao();
+	BookDao bookDao = new BookDao();
+	String bookFilePath = "./resources/books";
 
-	public String createPublisher(String publisherName, String publisherAddress,String publisherFilePath) {
+	/*
+	 * Create a new publisher
+	 * 
+	 * */
+	public String createPublisher(String publisherName, String publisherAddress, String publisherFilePath) {
+		if (publisherFilePath == null)
+			return "File path cannot be null";
+
 		publisherDao.readPublisherFile();
 		Random rand = new Random();
 		Integer publisherId = rand.nextInt(100000);
@@ -60,7 +70,12 @@ public class PublisherService implements LoadFiles {
 
 	}
 
-	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress, String publisherFilePath) {
+	/*
+	 * Update an existing publisher
+	 * 
+	 * */
+	public String updatePublisher(String publisherName, String publisherNewName, String publisherNewAddress,
+			String publisherFilePath) {
 
 		if (publisherName != null && publisherNewName != null && publisherNewAddress != null) {
 
@@ -79,7 +94,7 @@ public class PublisherService implements LoadFiles {
 							}
 						});
 					} else {
-						return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
+						return "publishers new name you entered is less then 3 characters or is longer then 45 characters";
 					}
 				}
 
@@ -92,7 +107,7 @@ public class PublisherService implements LoadFiles {
 							}
 						});
 					} else {
-						return "publishers new name you entered is ess then 3 characters or is longer then 45 characters";
+						return "publishers new name you entered is less then 3 characters or is longer then 45 characters";
 					}
 				}
 
@@ -105,7 +120,7 @@ public class PublisherService implements LoadFiles {
 							}
 						});
 					} else {
-						return "publishers new Address you entered is ess then 3 characters or is longer then 45 characters";
+						return "publishers new Address you entered is less then 3 characters or is longer then 45 characters";
 					}
 
 				}
@@ -120,14 +135,33 @@ public class PublisherService implements LoadFiles {
 
 	}
 
-	public void readPublisher() {
+	/*
+	 * read the publisher database
+	 *
+	 * */
+	public String readPublisher() {
+		publisherDao.readPublisherFile();
 		publisherDao.publisherMap.entrySet().stream().forEach((p) -> {
 			System.out.println("Publisher Name: " + p.getValue().getPublisherName() + " Address: "
 					+ p.getValue().getPublisherAddress());
 		});
+		return "done";
 	}
 
+	/*
+	 * delete a publisher
+	 * 
+	 * */
 	public String deletePublisher(String publisherName, String publisherFilePath) {
+		if(publisherName == null)
+			return "Publisher Name cannot be null";
+		if(publisherFilePath == null)
+			return "Publisher File Path cannot be null";
+
+		bookDao.readBookFile();
+		bookDao.bookMap.entrySet()
+				.removeIf(b -> b.getValue().getBookPublisher().getPublisherName().equals(publisherName));
+		bookDao.wirteBookFile(bookFilePath);
 
 		if (publisherDao.publisherMap.entrySet()
 				.removeIf(a -> a.getValue().getPublisherName().equalsIgnoreCase(publisherName))) {

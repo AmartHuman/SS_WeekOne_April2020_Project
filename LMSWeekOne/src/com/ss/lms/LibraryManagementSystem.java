@@ -75,7 +75,6 @@ public class LibraryManagementSystem {
 							System.out.println("Please enter Author you wish to update: ");
 							scanInput.nextLine();
 							authorName = scanInput.nextLine();
-							// scanInput.nextLine();
 							authorNameNew = scanInput.nextLine();
 							System.out.println(authorService.updateAuthor(authorName, authorNameNew,authorFilePath));
 							break;
@@ -125,8 +124,18 @@ public class LibraryManagementSystem {
 							bookService.readBook();
 							break;
 						case 3:
+							System.out.println("Please input book Name you wish to update: ");
+							scanInput.nextLine();
+							bookName = scanInput.nextLine();
+							System.out.println("What is the new name of the book: ");
+							bookNewName = scanInput.nextLine();
+							System.out.println(bookService.updateBook(bookName, bookNewName, bookFilePath));
 							break;
 						case 4:
+							System.out.println("Please input book you wish to delete: ");
+							scanInput.nextLine();
+							bookName = scanInput.nextLine();
+							System.out.println(bookService.deleteBook(bookName, bookFilePath));
 							break;
 						case 0:
 							break;

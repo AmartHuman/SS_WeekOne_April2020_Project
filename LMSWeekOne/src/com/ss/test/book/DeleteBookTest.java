@@ -13,36 +13,23 @@ public class DeleteBookTest {
 	public void deleteABook() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.deleteBook("A Test",0,0,"./resources/booksTest"), "The Book Was removed from the database");
+		assertEquals(bookService.deleteBook("Testing Book","./resources/booksTest"), "The Book Was removed from the database");
 	}
 	
 	@Test
 	public void bookNameIsNullOrEmpty() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.deleteBook(null,0,0,"./resources/booksTest"), "Book Name cannot be null!");
+		assertEquals(bookService.deleteBook(null,"./resources/booksTest"), "Book Name cannot be null!");
 	}
 	
 	@Test
 	public void bookNameIsWasNotFound() {
 		BookService bookService = new BookService();
 		bookService.loadFiles();
-		assertEquals(bookService.deleteBook("asd",0,0,"./resources/booksTest"), "No Book by that name was found");
+		assertEquals(bookService.deleteBook("asd","./resources/booksTest"), "No Book by that name was found");
 	}
 	
-	@Test
-	public void bookOfAuthorsWereRemoved() {
-		BookService bookService = new BookService();
-		bookService.loadFiles();
-		assertEquals(bookService.deleteBook("NO BOOK",1,0,"./resources/booksTest"), "Books of that Author were removed as well");
-	}
-	
-	@Test
-	public void bookOfPublisherWereRemoved() {
-		BookService bookService = new BookService();
-		bookService.loadFiles();
-		assertEquals(bookService.deleteBook("NO BOOK",0,2,"./resources/booksTest"), "Books of that Publisher were removed as well");
-	}
 
 
 }

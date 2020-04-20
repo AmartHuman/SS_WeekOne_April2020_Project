@@ -59,12 +59,11 @@ public class BookService implements LoadFiles {
 			if (authorFound != true) {
 				System.out.println("Author was not found!");
 				System.out.println("Creating New Entrty...");
-				authorService.createAuthor(authorName, authorFilePath);
+				System.out.println(authorService.createAuthor(authorName, authorFilePath));
 				authorDao.readAuthorFile();
 				for (Author author : authorDao.authorMap.values()) {
 					if (author.getAuthorName().equals(authorName)) {
-						this.authorDao.author = author;
-						break;
+						authorDao.author = author;
 					}
 				}
 			}
@@ -83,13 +82,11 @@ public class BookService implements LoadFiles {
 			if (publisherFound != true) {
 				System.out.println("Publisher was not found!");
 				System.out.println("Creating New Entrty...");
-				publisherService.createPublisher(publisherName, publisherAddress, publisherFilePath);
-				authorDao.readAuthorFile();
+				System.out.println(publisherService.createPublisher(publisherName, publisherAddress, publisherFilePath));
+				publisherDao.readPublisherFile();
 				for (Publisher publisher : publisherDao.publisherMap.values()) {
 					if (publisher.getPublisherName().equalsIgnoreCase(publisherName)) {
-						this.publisherDao.publisher = publisher;
-						publisherFound = true;
-						break;
+						publisherDao.publisher = publisher;
 					}
 				}
 			}
@@ -150,17 +147,19 @@ public class BookService implements LoadFiles {
 		return "Book has been updated";
 	}
 
-	public void readBook() {
+	public String readBook() {
+		bookDao.readBookFile();
 		bookDao.bookMap.entrySet().stream().forEach((b) -> {
 			System.out.println("Book Name: " + b.getValue().getBookName() + " | Author Name: "
 					+ b.getValue().getBookAuthor().getAuthorName() + "  | Publisher Name: "
 					+ b.getValue().getBookPublisher().getPublisherName());
 		});
+		return "done";
 		// bookDao.wirteBookFile();
 	}
 
-	public String deleteBook(String bookName, Integer authorKey, Integer publisherKey, String filePath) {
-		if (authorKey != null && authorKey == 0 && publisherKey == 0) {
+	public String deleteBook(String bookName, String filePath) {
+		
 			if (bookName != null) {
 				if (bookDao.bookMap.entrySet().removeIf(b -> b.getValue().getBookName().equalsIgnoreCase(bookName))) {
 					bookDao.wirteBookFile(filePath);
@@ -169,19 +168,7 @@ public class BookService implements LoadFiles {
 				return "No Book by that name was found";
 			} else {
 				return "Book Name cannot be null!";
-			}
-		} else if (bookName.equalsIgnoreCase("NO BOOK") && authorKey != 0) {
-			bookDao.bookMap.entrySet().removeIf(b -> b.getValue().getBookAuthor().getAuthorId().equals(authorKey));
-			bookDao.wirteBookFile(filePath);
-			return "Books of that Author were removed as well";
-		} else if (bookName.equalsIgnoreCase("NO BOOK") && publisherKey != 0) {
-			bookDao.bookMap.entrySet()
-					.removeIf(b -> b.getValue().getBookPublisher().getPublisherId().equals(publisherKey));
-			bookDao.wirteBookFile(filePath);
-			return "Books of that Publisher were removed as well";
-		} else {
-			return "Book deletion complete";
-		}
+			} 
 
 	}
 

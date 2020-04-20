@@ -54,7 +54,6 @@ public class BookDao {
 				}
 				book = new Book(Integer.parseInt(token[0]), token[1], authorDao.author, publisherDao.publisher);
 				bookMap.put(book.getBookId(), book);
-
 			}
 
 		} catch (IOException e) {

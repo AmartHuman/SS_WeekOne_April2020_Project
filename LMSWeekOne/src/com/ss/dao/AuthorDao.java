@@ -56,9 +56,9 @@ public class AuthorDao {
 					writer.write(data);
 			}
 
-		} catch (Exception e) {
-			System.out.println();
-		}
+		} catch (IOException e) {
+			System.out.println("File not found");
+		} 
 
 	}
 
