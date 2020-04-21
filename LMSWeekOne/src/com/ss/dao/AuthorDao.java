@@ -33,7 +33,8 @@ public class AuthorDao {
 	public void readAuthorFile() {
 
 		String getFileLine;
-
+		
+		authorMap.clear();
 		try (BufferedReader bufferRead = new BufferedReader(new FileReader("./resources/authors"))) {
 
 			while ((getFileLine = bufferRead.readLine()) != null) {
