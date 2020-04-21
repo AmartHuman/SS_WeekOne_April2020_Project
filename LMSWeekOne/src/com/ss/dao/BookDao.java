@@ -39,7 +39,8 @@ public class BookDao {
 		String getFileLine;
 
 		try (BufferedReader bufferRead = new BufferedReader(new FileReader("./resources/books"))) {
-
+			
+			bookMap.clear();
 			while ((getFileLine = bufferRead.readLine()) != null) {
 				String[] token = getFileLine.split("/");
 				authorDao.readAuthorFile();

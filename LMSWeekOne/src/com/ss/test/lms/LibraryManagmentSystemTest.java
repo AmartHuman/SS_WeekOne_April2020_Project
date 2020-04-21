@@ -3,10 +3,9 @@
  */
 package com.ss.test.lms;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+
+import org.junit.Test;
 
 import com.ss.lms.LibraryManagementSystem;
 
@@ -22,27 +21,25 @@ public class LibraryManagmentSystemTest {
 		LibraryManagementSystem.main(args);
 	}
 	
-	//@Test
-	public void testMain() throws FileNotFoundException   {
-	    //System.out.println("main");
+	@Test
+	public void testMain()   {
 	    String[] args = null;
-	    final InputStream original = System.in;
-	    final FileInputStream inputFile = new FileInputStream(new File("./resources/books"));
-	    System.setIn(inputFile);
+	    ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
+	    System.setIn(in);
+	    System.setIn(System.in);
+	    in =  new ByteArrayInputStream("0".getBytes());
+	    System.setIn(in);
 	    LibraryManagementSystem.main(args);
-	    System.setIn(original);
 	}
 	
+	//@Test
 	public void testInput() {
-//		Integer data = 1;
-//		InputStream stdin = System.in;
-//		try {
-//			  System.setIn(new ByteInputStream(data));;
-//			  Scanner scanner = new Scanner(System.in);
-//			  System.out.println(scanner.nextLine());
-//			} finally {
-//			  System.setIn(stdin);
-//			}
+		 String[] args = null;
+	    ByteArrayInputStream in = new ByteArrayInputStream("A".getBytes());
+	    System.setIn(in);
+	    System.setIn(System.in);
+	    
+	    LibraryManagementSystem.main(args);
 		
 	}
 

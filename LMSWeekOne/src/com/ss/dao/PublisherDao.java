@@ -33,6 +33,7 @@ public class PublisherDao {
 	public void readPublisherFile() {
 
 		String getFileLine;
+		publisherMap.clear();
 		try (BufferedReader bufferRead = new BufferedReader(new FileReader("./resources/publishers"))) {
 
 			while ((getFileLine = bufferRead.readLine()) != null) {

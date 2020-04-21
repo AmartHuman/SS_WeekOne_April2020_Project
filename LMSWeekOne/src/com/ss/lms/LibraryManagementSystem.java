@@ -14,7 +14,7 @@ import com.ss.service.PublisherService;
 public class LibraryManagementSystem {
 
 	/**
-	 * @param args
+	 * Stat of the Main function were we kick off the program
 	 */
 	public static void main(String[] args) {
 
