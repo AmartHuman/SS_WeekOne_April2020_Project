@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Author implements Serializable{
 
 
-	private static final long serialVersionUID = -84732899621423633L;
+	private static final long serialVersionUID = 4632242659521394956L;
 	
 	
 	private Integer authorId;
@@ -82,10 +82,6 @@ public class Author implements Serializable{
 		return true;
 	}
 	
-	
-	public String toString() {
-		return " Author ID: "+this.authorId +" Author Name: "+ this.authorName +"\n";
-	}
 	
 
 
