@@ -9,6 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.ss.test.author.AuthorTestSuite;
 import com.ss.test.book.BookTestSuite;
+import com.ss.test.lms.LibraryManagmentSystemTest;
 import com.ss.test.model.ModelTestSuite;
 import com.ss.test.publisher.PublisherTestSuite;
 
@@ -17,7 +18,7 @@ import com.ss.test.publisher.PublisherTestSuite;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({AuthorTestSuite.class,PublisherTestSuite.class,BookTestSuite.class,ModelTestSuite.class})
+@SuiteClasses({AuthorTestSuite.class,PublisherTestSuite.class,BookTestSuite.class,ModelTestSuite.class,LibraryManagmentSystemTest.class})
 public class LMSTestSuite {
 
 }
